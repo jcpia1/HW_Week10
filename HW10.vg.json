@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "vconcat": [
     {
-      "width": "container",
+      "width": 600,
       "height": 400,
       "title": "Bushfires in NSW",
       "projection": {"type": "mercator"},
@@ -17,8 +17,8 @@
           },
           "mark": {
             "type": "geoshape",
-            "fill": "#d2d2d2",
-            "stroke": "#ffffff"
+            "fill": "#9ac8d6",
+            "stroke": "#9ac8d6"
           }
         },
         {
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "width": "container",
+      "width": 600,
       "height": 60,
       "title": "Number of Bushfires in NSW by Year",
       "data": {
@@ -64,6 +64,9 @@
         }
       },
       "mark": "bar",
+      "transform": [
+        {"filter": "datum.properties.Year >= 1940"}
+      ],
       "encoding": {
         "x": {
           "field": "properties.Year",
@@ -98,7 +101,7 @@
       "value": 2000,
       "bind": {
         "input": "range",
-        "min": 1980,
+        "min": 1940,
         "max": 2020,
         "step": 1,
         "name": "Select Year"
