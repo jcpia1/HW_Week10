@@ -1,11 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Bushfires in NSW",
   "vconcat": [
     {
       "width": "container",
       "height": 400,
-      "title": "Bushfires in NSW by Year",
+      "title": "Bushfires in NSW",
       "projection": {"type": "mercator"},
       "layer": [
         {
@@ -32,14 +31,14 @@
           },
           "transform": [
             {
-              "filter": "datum.properties.Year == yearSelector.properties.Year"
+              "filter": "datum.properties.Year === selectedYear"
             }
           ],
           "mark": {
             "type": "geoshape",
             "fill": "red",
             "stroke": "black",
-            "opacity": 0.2
+            "opacity": 0.8
           },
           "encoding": {
             "tooltip": [
@@ -56,6 +55,7 @@
     {
       "width": "container",
       "height": 60,
+      "title": "Number of Bushfires in NSW by Year",
       "data": {
         "url": "https://raw.githubusercontent.com/jcpia1/HW_Week9/main/map_and_data.json",
         "format": {
@@ -64,43 +64,44 @@
         }
       },
       "mark": "bar",
-      "params": [
-        {
-          "name": "yearSelector",
-          "select": {
-            "type": "point",
-            "fields": ["properties.Year"],
-            "clear": "dblclick"
-          }
-        }
-      ],
       "encoding": {
         "x": {
           "field": "properties.Year",
-          "type": "ordinal",
-          "axis": {"labelAngle": 0, "tickCount": "year", "grid": false}
+          "type": "quantitative",
+          "title": "Year",
+          "bin": {
+            "step": 5
+          },
+          "axis": {
+            "labelFlush": true
+          }
         },
         "y": {
           "aggregate": "count",
           "type": "quantitative",
           "title": "Count of Bushfires",
+          "scale": {
+            "nice": true
+          },
           "axis": {
             "tickCount": 4,
-            "labelPadding": 8
+            "labelOverlap": "parity",
+            "labelAlign": "right"
           }
-        },
-        "color": {
-          "field": "properties.Year",
-          "type": "ordinal",
-          "legend": null,
-          "scale": {
-            "scheme": "tableau10"
-          }
-        },
-        "tooltip": [
-          {"field": "properties.Year", "type": "ordinal", "title": "Year"},
-          {"aggregate": "count", "type": "quantitative", "title": "Count of Bushfires"}
-        ]
+        }
+      }
+    }
+  ],
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2000,
+      "bind": {
+        "input": "range",
+        "min": 1980,
+        "max": 2020,
+        "step": 1,
+        "name": "Select Year"
       }
     }
   ],
